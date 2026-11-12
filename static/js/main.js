@@ -435,21 +435,13 @@
     const nav = document.getElementById("nav");
     if (!nav || sections.length < 2) return;
     const inner = el("div", "nav-inner");
-    const links = new Map();
     for (const sec of sections) {
       const a = el("a", null, { href: `#${sec.id}` });
       a.textContent = sec.nav || sec.title;
       inner.append(a);
-      links.set(sec.id, a);
     }
     nav.append(inner);
     nav.hidden = false;
-    const io = new IntersectionObserver((es) => {
-      for (const e of es) {
-        if (e.isIntersecting) links.forEach((a, id) => a.classList.toggle("is-active", id === e.target.id));
-      }
-    }, { rootMargin: "-45% 0px -54% 0px" });
-    sections.forEach((sec) => io.observe(document.getElementById(sec.id)));
   }
 
   function buildCredits(sections) {

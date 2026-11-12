@@ -262,7 +262,7 @@ window.PAGE_DATA = {
    "samples": [
     {
      "id": "basketball",
-     "title": "Basketball",
+     "title": "Basketball layup",
      "original": {
       "slot": "original",
       "label": "Original",
@@ -305,7 +305,7 @@ window.PAGE_DATA = {
     },
     {
      "id": "cortis_redred",
-     "title": "Cortis redred",
+     "title": "Hip-hop dance",
      "original": {
       "slot": "original",
       "label": "Original",
@@ -348,7 +348,7 @@ window.PAGE_DATA = {
     },
     {
      "id": "jackson2",
-     "title": "Jackson2",
+     "title": "Moonwalk",
      "original": {
       "slot": "original",
       "label": "Original",
@@ -391,7 +391,7 @@ window.PAGE_DATA = {
     },
     {
      "id": "sample4",
-     "title": "Sample4",
+     "title": "Figure skating",
      "original": {
       "slot": "original",
       "label": "Original",
