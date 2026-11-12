@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SAM 3D Body · SMIRK · MediaPipe</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231c2b33'/%3E%3Ccircle cx='9' cy='16' r='3.4' fill='%235b9bff'/%3E%3Ccircle cx='16' cy='16' r='3.4' fill='%23a58bff'/%3E%3Ccircle cx='23' cy='16' r='3.4' fill='%2338c9a5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true">
+    <symbol id="i-paper" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></g></symbol>
+    <symbol id="i-web" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9M12 3C9.4 5.6 8.2 8.6 8.2 12s1.2 6.4 3.8 9"/></g></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.5v13l10.5-6.5z"/></symbol>
+    <symbol id="i-code" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></symbol>
+  </svg>
+
+  <!-- Sticky section links. Keys: ← → (or PageUp/PageDown) next block, 1–4 sections, 0 top, click a figure to zoom -->
+  <nav class="topnav" aria-label="Sections">
+    <div class="topnav-inner">
+      <a href="#top" data-nav="top">Overview</a>
+      <a href="#sam3db" data-nav="sam3db" style="--c: var(--body)"><i></i>SAM 3D Body</a>
+      <a href="#smirk" data-nav="smirk" style="--c: var(--smirk)"><i></i>SMIRK</a>
+      <a href="#mediapipe" data-nav="mediapipe" style="--c: var(--mp)"><i></i>MediaPipe</a>
+      <a href="#compare" data-nav="compare">비교</a>
+      <a class="topnav-demo" href="../index.html" target="_blank" rel="noopener">Demo Page ↗</a>
+    </div>
+  </nav>
+
+  <!-- ============================================================ HERO -->
+  <header class="hero step" id="top">
+    <div class="container">
+      <h1 class="title">SAM 3D Body <span>·</span> SMIRK <span>·</span> MediaPipe</h1>
+      <p class="venues">
+        <span style="--c: var(--body)"><i></i>Meta · arXiv 2026</span>
+        <span style="--c: var(--smirk)"><i></i>CVPR 2024</span>
+        <span style="--c: var(--mp)"><i></i>Google MediaPipe</span>
+      </p>
+      <div class="links">
+        <a class="pill" href="../index.html" target="_blank" rel="noopener">
+          <svg aria-hidden="true"><use href="#i-play"/></svg>
+          <span>Demo Page</span>
+        </a>
+      </div>
+
+      <div class="cards step">
+        <a class="card" href="#sam3db" style="--accent: var(--body)">
+          <div class="card-media"><img src="assets/sam3db/teaser_thumb.jpg" alt="SAM 3D Body 결과 예시"></div>
+          <div class="card-body">
+            <span class="card-tag">Body</span>
+            <h2>SAM 3D Body</h2>
+            <p>이미지 1장 → 전신 3D 메시</p>
+            <div class="io"><span>사람 크롭</span><b>→</b><span>MHR 메시</span></div>
+          </div>
+        </a>
+        <a class="card" href="#smirk" style="--accent: var(--smirk)">
+          <div class="card-media"><img src="assets/smirk/teaser.jpg" alt="SMIRK 결과 예시" style="object-position: 84% 50%"></div>
+          <div class="card-body">
+            <span class="card-tag">Face</span>
+            <h2>SMIRK</h2>
+            <p>얼굴 이미지 → 3D 표정</p>
+            <div class="io"><span>얼굴 크롭</span><b>→</b><span>FLAME 메시</span></div>
+          </div>
+        </a>
+        <a class="card" href="#mediapipe" style="--accent: var(--mp)">
+          <div class="card-media"><img src="assets/mediapipe/demo_loop.webp" alt="MediaPipe Face Landmarker 결과 예시"></div>
+          <div class="card-body">
+            <span class="card-tag">Face · Real-time</span>
+            <h2>MediaPipe Face Landmarker</h2>
+            <p>실시간 얼굴 랜드마크 · 표정 계수</p>
+            <div class="io"><span>영상 프레임</span><b>→</b><span>478점 + 52 계수</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ========================================================== 01 SAM 3D Body -->
+    <section class="algo band" id="sam3db" style="--accent: var(--body); --accent-soft: var(--body-soft)">
+      <div class="container">
+        <div class="step">
+          <header class="algo-head">
+            <p class="eyebrow">01 · Body</p>
+            <h2>SAM 3D Body</h2>
+            <p class="paper">SAM 3D Body: Robust Full-Body Human Mesh Recovery</p>
+            <p class="meta">Meta Superintelligence Labs · arXiv 2602.15989 · 2025.11 공개</p>
+            <div class="links small">
+              <a class="pill line" href="https://arxiv.org/abs/2602.15989" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-paper"/></svg><span>Paper</span></a>
+              <a class="pill line" href="https://github.com/facebookresearch/sam-3d-body" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-code"/></svg><span>Code</span></a>
+              <a class="pill line" href="https://ai.meta.com/sam3d/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-web"/></svg><span>Project</span></a>
+            </div>
+          </header>
+          <figure class="fig fit" style="--ar: 2.98; --reserve: 610px">
+            <div class="frame pad"><img src="assets/sam3db/architecture.png" alt="SAM 3D Body 모델 구조: Encoder, Body/Hand Decoder, 토큰, MHR 출력"></div>
+            <figcaption><span>공유 인코더 + 몸 · 손 디코더, 출력은 MHR 파라미터</span><span class="src">Fig. 2 · SAM 3D Body</span></figcaption>
+          </figure>
+          <ol class="ideas">
+            <li><b>입력</b><span>사람 크롭 512×512 · 키포인트 · 마스크 프롬프트 (선택)</span></li>
+            <li><b>구조</b><span>DINOv3 인코더 → 몸 · 손 디코더, 토큰이 cross-attention으로 특징 참조</span></li>
+            <li><b>출력</b><span>MHR 파라미터 + 카메라 → 메시 (정점 18,439 · 관절 127)</span></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== 02 SMIRK -->
+    <section class="algo" id="smirk" style="--accent: var(--smirk); --accent-soft: var(--smirk-soft)">
+      <div class="container">
+        <div class="step">
+          <header class="algo-head">
+            <p class="eyebrow">02 · Face</p>
+            <h2>SMIRK</h2>
+            <p class="paper">3D Facial Expressions through Analysis-by-Neural-Synthesis</p>
+            <p class="meta">CVPR 2024 · arXiv 2404.04104</p>
+            <div class="links small">
+              <a class="pill line" href="https://arxiv.org/abs/2404.04104" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-paper"/></svg><span>Paper</span></a>
+              <a class="pill line" href="https://github.com/georgeretsi/smirk" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-code"/></svg><span>Code</span></a>
+              <a class="pill line" href="https://georgeretsi.github.io/smirk/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-web"/></svg><span>Project</span></a>
+              <a class="pill line" href="https://www.youtube.com/watch?v=8ZVgr41wxbk" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-play"/></svg><span>Video</span></a>
+            </div>
+          </header>
+          <figure class="fig fit" style="--ar: 2.45; --reserve: 610px">
+            <div class="frame pad"><img src="assets/smirk/reconstruction.png" alt="SMIRK 구조: Encoder, Renderer, masking, Image-to-Image Translator"></div>
+            <figcaption><span>추론은 Encoder까지 · Renderer와 Translator는 학습 때만 사용</span><span class="src">Fig. 2 · SMIRK</span></figcaption>
+          </figure>
+          <ol class="ideas">
+            <li><b>입력</b><span>얼굴 크롭 224×224</span></li>
+            <li><b>구조</b><span>MobileNetV3 인코더 3개 → 머리 회전 · 카메라 / 형태 / 표정</span></li>
+            <li><b>출력</b><span>FLAME 파라미터 (형태 300 · 표정 50 · 눈꺼풀 2 · 턱 3) → 메시 (정점 5,023)</span></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== 03 MediaPipe -->
+    <section class="algo band" id="mediapipe" style="--accent: var(--mp); --accent-soft: var(--mp-soft)">
+      <div class="container">
+        <div class="step">
+          <header class="algo-head">
+            <p class="eyebrow">03 · Face · Real-time</p>
+            <h2>MediaPipe Face Landmarker</h2>
+            <p class="paper">BlazeFace → Face Mesh V2 → Blendshapes V2</p>
+            <p class="meta">Google</p>
+            <div class="links small">
+              <a class="pill line" href="https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-web"/></svg><span>Docs</span></a>
+              <a class="pill line" href="https://arxiv.org/abs/1907.05047" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-paper"/></svg><span>BlazeFace</span></a>
+              <a class="pill line" href="https://arxiv.org/abs/1907.06724" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-paper"/></svg><span>Face Mesh</span></a>
+              <a class="pill line" href="https://arxiv.org/abs/2006.10962" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-paper"/></svg><span>Attention Mesh</span></a>
+              <a class="pill line" href="https://arxiv.org/abs/2309.05782" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-paper"/></svg><span>Blendshapes</span></a>
+            </div>
+          </header>
+          <figure class="fig fit" style="--ar: 4.49; --reserve: 610px">
+            <div class="frame bare"><img src="assets/mediapipe/pipeline.svg" alt="Face Landmarker 번들 파이프라인: 이미지, Face Detector, 3D Landmark Model, Expression and Pose"></div>
+            <figcaption><span>모델 3개를 묶은 번들: 검출 → 랜드마크 → 표정 · 자세</span><span class="src">MediaPipe 공식 문서</span></figcaption>
+          </figure>
+          <ol class="ideas">
+            <li><b>입력</b><span>영상 프레임 (RGB)</span></li>
+            <li><b>구조</b><span>BlazeFace 검출 → 랜드마크 CNN → MLP-Mixer, 영상에선 이전 프레임으로 추적</span></li>
+            <li><b>출력</b><span>478 × (x, y, z) · 표정 계수 52 (0–1) · 머리 자세 4×4 행렬</span></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== 04 Compare -->
+    <section class="algo" id="compare" style="--accent: var(--ink); --accent-soft: var(--bg-alt)">
+      <div class="container step">
+        <header class="algo-head">
+          <p class="eyebrow">04 · Summary</p>
+          <h2>세 모델 비교</h2>
+        </header>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col" style="--c: var(--body)"><i></i>SAM 3D Body</th>
+                <th scope="col" style="--c: var(--smirk)"><i></i>SMIRK</th>
+                <th scope="col" style="--c: var(--mp)"><i></i>MediaPipe</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">대상</th><td>전신 (손 · 발 포함)</td><td>얼굴 (머리 메시)</td><td>얼굴</td></tr>
+              <tr><th scope="row">방식</th><td>Transformer 디코더 회귀<br><small>프롬프트 가능</small></td><td>CNN 인코더 ×3 회귀<br><small>신경 렌더러로 학습</small></td><td>CNN 랜드마크 회귀<br><small>+ MLP-Mixer</small></td></tr>
+              <tr><th scope="row">3D 표현</th><td>MHR · 정점 18,439</td><td>FLAME · 정점 5,023</td><td>점 478 (상대 깊이)</td></tr>
+              <tr><th scope="row">표정</th><td>—</td><td>표정 50 · 눈꺼풀 2 · 턱 3</td><td>블렌드셰이프 52</td></tr>
+              <tr><th scope="row">카메라</th><td>원근 투영</td><td>정사영 (크롭 안)</td><td>4×4 변환 행렬</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== References -->
+    <section class="refs band" id="refs">
+      <div class="container step">
+        <h2>References</h2>
+        <ol>
+          <li><a href="https://arxiv.org/abs/2602.15989" target="_blank" rel="noopener">SAM 3D Body: Robust Full-Body Human Mesh Recovery</a><span>X. Yang, D. Kukreja, D. Pinkus et al. · arXiv 2602.15989, 2026</span></li>
+          <li><a href="https://arxiv.org/abs/2511.15586" target="_blank" rel="noopener">MHR: Momentum Human Rig</a><span>A. Ferguson, A. A. A. Osman, B. Bescos et al. · arXiv 2511.15586, 2025</span></li>
+          <li><a href="https://arxiv.org/abs/2404.04104" target="_blank" rel="noopener">SMIRK: 3D Facial Expressions through Analysis-by-Neural-Synthesis</a><span>G. Retsinas, P. P. Filntisis, R. Daněček et al. · CVPR 2024</span></li>
+          <li><a href="https://flame.is.tue.mpg.de/" target="_blank" rel="noopener">FLAME: Learning a Model of Facial Shape and Expression from 4D Scans</a><span>T. Li, T. Bolkart, M. J. Black, H. Li, J. Romero · SIGGRAPH Asia 2017</span></li>
+          <li><a href="https://arxiv.org/abs/1907.05047" target="_blank" rel="noopener">BlazeFace: Sub-millisecond Neural Face Detection on Mobile GPUs</a><span>V. Bazarevsky, Y. Kartynnik, A. Vakunov et al. · CVPR Workshops 2019</span></li>
+          <li><a href="https://arxiv.org/abs/1907.06724" target="_blank" rel="noopener">Real-time Facial Surface Geometry from Monocular Video on Mobile GPUs</a><span>Y. Kartynnik, A. Ablavatski, I. Grishchenko et al. · CVPR Workshops 2019</span></li>
+          <li><a href="https://arxiv.org/abs/2006.10962" target="_blank" rel="noopener">Attention Mesh: High-fidelity Face Mesh Prediction in Real-time</a><span>I. Grishchenko, A. Ablavatski, Y. Kartynnik et al. · CVPR Workshops 2020</span></li>
+          <li><a href="https://arxiv.org/abs/2309.05782" target="_blank" rel="noopener">Blendshapes GHUM: Real-time Monocular Facial Blendshape Prediction</a><span>I. Grishchenko, G. Yan, E. G. Bazavan et al. · arXiv 2309.05782, 2023</span></li>
+          <li><a href="https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker" target="_blank" rel="noopener">MediaPipe Face Landmarker</a><span>Google AI Edge 문서 · 모델 카드:
+            <a href="https://storage.googleapis.com/mediapipe-assets/MediaPipe%20BlazeFace%20Model%20Card%20(Short%20Range).pdf" target="_blank" rel="noopener">BlazeFace</a>,
+            <a href="https://storage.googleapis.com/mediapipe-assets/Model%20Card%20MediaPipe%20Face%20Mesh%20V2.pdf" target="_blank" rel="noopener">Face Mesh V2</a>,
+            <a href="https://storage.googleapis.com/mediapipe-assets/Model%20Card%20Blendshape%20V2.pdf" target="_blank" rel="noopener">Blendshape V2</a></span></li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <!-- zoomed figure -->
+  <div class="lightbox" id="lightbox" hidden>
+    <img alt="">
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <script src="static/js/main.js"></script>
+</body>
+</html>
