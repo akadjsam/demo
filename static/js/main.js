@@ -1,10 +1,11 @@
-/* Video-only project page: sections, synced video rows and sample pickers from data/videos.js
-   (written by build_page.py). No libraries. */
+/* Video-only project page: sections, synced video rows, method switches and sample pickers from
+   data/videos.js (written by build_page.py). No libraries. */
 (() => {
   "use strict";
 
   const DATA = window.PAGE_DATA;
   const SYNC_TOLERANCE = 0.12; // s: a video further than this from the first video of its row jumps to it
+  const SYNC_NUDGE = 0.025;    // s: smaller drifts are evened out by playing 5% faster or slower
   const SYNC_EVERY = 250;      // ms between sync checks
   const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -32,6 +33,12 @@
     if (p && p.catch) p.catch(() => {});
   };
 
+  const stopVideo = (v) => { // stop playing and downloading
+    v.pause();
+    v.removeAttribute("src");
+    v.load();
+  };
+
   const mutedVideo = (cls, attrs) => {
     const v = el("video", cls, Object.assign({ muted: "", loop: "", playsinline: "", disablepictureinpicture: "" }, attrs));
     v.muted = true;
@@ -44,11 +51,15 @@
   const fsElement = () => document.fullscreenElement || document.webkitFullscreenElement || null;
   const fsEnabled = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
 
-  /* One row of videos (original, visualization, analysis) that play, pause and seek together.
-     The first video leads; the others follow it. */
+  /* One row of videos (original, visualization, 3D view, analysis) that play, pause and seek together.
+     The first video leads; the others follow it. Several methods: a switch swaps the result videos while
+     the original keeps playing. */
   class Player {
     constructor(section) {
       this.section = section;
+      this.methods = section.methods || [];
+      this.method = this.methods.length ? this.methods[0].id : null;
+      this.figs = [];
       this.videos = [];
       this.master = null;
       this.index = -1;
@@ -89,7 +100,24 @@
       this.playBtn.addEventListener("click", () => this.toggle());
       this.row.addEventListener("click", () => this.toggle());
       this.bindScrub();
+      this.switchEl = this.methods.length > 1 ? this.buildSwitch() : null;
       this.thumbs = this.buildThumbs();
+    }
+
+    result(sample) {
+      return sample.results[this.method] || Object.values(sample.results)[0];
+    }
+
+    buildSwitch() {
+      const box = el("div", "methods", { role: "group", "aria-label": "Method" });
+      this.methodBtns = this.methods.map((m) => {
+        const b = el("button", "method", { type: "button", "aria-pressed": "false", title: m.title });
+        b.textContent = m.short || m.title;
+        b.addEventListener("click", () => this.setMethod(m.id));
+        box.append(b);
+        return b;
+      });
+      return box;
     }
 
     buildThumbs() {
@@ -101,7 +129,7 @@
         const b = el("button", "thumb", { type: "button", "aria-pressed": "false", title: s.title });
         const cap = el("span", "thumb-title");
         cap.textContent = s.title;
-        b.append(el("img", "thumb-img", { src: s.thumb, alt: "", loading: "lazy", decoding: "async" }), cap);
+        b.append(el("img", "thumb-img", { src: this.result(s).thumb, alt: "", loading: "lazy", decoding: "async" }), cap);
         b.addEventListener("click", () => {
           this.userPaused = false;
           if (k === this.index) this.play();
@@ -112,46 +140,90 @@
       });
     }
 
+    makeTile(spec, sample) {
+      const fig = el("figure", "clip", { "data-slot": spec.slot });
+      fig.style.setProperty("--ar", (spec.width / spec.height).toFixed(4));
+      const label = el("figcaption", "clip-label");
+      const text = el("span");
+      text.textContent = spec.label;
+      label.append(text);
+      const frame = el("div", "frame");
+      const v = mutedVideo(null, { preload: "none", poster: spec.poster, "aria-label": `${spec.label}: ${sample.title}` });
+      v.dataset.src = spec.src;
+      v.addEventListener("loadedmetadata", () => { // a video that joins late starts at the leader's time
+        const m = this.master;
+        if (m && m !== v && m.readyState > 0 && Math.abs(v.currentTime - m.currentTime) > 0.04) v.currentTime = m.currentTime;
+      });
+      frame.append(v);
+      fig.append(label, frame);
+      fig._video = v;
+      return fig;
+    }
+
+    bindMaster(m) {
+      if (m._bound) return;
+      m._bound = true;
+      const mine = () => m === this.master;
+      m.addEventListener("play", () => { if (mine()) { this.updateButton(); this.startLoop(); } });
+      m.addEventListener("pause", () => { if (mine()) { this.updateButton(); this.render(); } });
+      m.addEventListener("loadedmetadata", () => { if (mine()) this.render(); });
+      m.addEventListener("seeked", () => { if (mine()) this.render(); });
+    }
+
     select(i) {
-      if (i === this.index) return;
-      const sample = this.section.samples[i];
+      if (i !== this.index) this.show(i, false);
+    }
+
+    setMethod(id) {
+      if (id === this.method) return;
+      this.method = id;
+      if (this.index >= 0) this.show(this.index, true);
+    }
+
+    show(i, sameSample) {
+      const samples = this.section.samples;
+      const sample = samples[i];
+      if (!sample.results[this.method]) this.method = Object.keys(sample.results)[0];
+      const specs = (sample.original ? [sample.original] : []).concat(sample.results[this.method].videos);
+      const keep = sameSample && sample.original && this.figs.length ? this.figs[0] : null; // original keeps playing
       this.index = i;
-      for (const v of this.videos) { // stop the old videos downloading
-        v.pause();
-        v.removeAttribute("src");
-        v.load();
+      for (const f of this.figs) {
+        if (f !== keep) {
+          stopVideo(f._video);
+          f.remove();
+        }
       }
-      this.row.textContent = "";
-      this.videos = [];
-      let sumAr = 0;
-      for (const spec of sample.videos) {
-        const ar = spec.width / spec.height;
-        sumAr += ar;
-        const fig = el("figure", "clip", { "data-slot": spec.slot });
-        fig.style.setProperty("--ar", ar.toFixed(4));
-        const label = el("figcaption", "clip-label");
-        const labelText = el("span");
-        labelText.textContent = spec.label;
-        label.append(labelText);
-        const frame = el("div", "frame");
-        const v = mutedVideo(null, { preload: "none", poster: spec.poster, "aria-label": `${spec.label}: ${sample.title}` });
-        v.dataset.src = spec.src;
-        frame.append(v);
-        fig.append(label, frame);
+      this.figs = keep ? [keep] : [];
+      for (let k = this.figs.length; k < specs.length; k++) {
+        const fig = this.makeTile(specs[k], sample);
         this.row.append(fig);
-        this.videos.push(v);
+        this.figs.push(fig);
       }
-      const m = (this.master = this.videos[0]);
-      this.inner.style.setProperty("--sum-ar", sumAr.toFixed(4));
-      this.inner.style.setProperty("--n", String(this.videos.length));
-      this.root.classList.toggle("is-wide", sumAr > 2.2);
-      m.addEventListener("play", () => { this.updateButton(); this.startLoop(); });
-      m.addEventListener("pause", () => { this.updateButton(); this.render(); });
-      m.addEventListener("loadedmetadata", () => this.render());
-      m.addEventListener("seeked", () => this.render());
+      this.videos = this.figs.map((f) => f._video);
+      this.master = this.videos[0];
+      this.bindMaster(this.master);
+
+      // equal heights in a row; four landscape videos (body) go 2 x 2 so that each stays large
+      const ars = specs.map((s) => s.width / s.height);
+      const sum = ars.reduce((a, b) => a + b, 0);
+      const grid = specs.length === 4 && ars.every((a) => a > 1.3);
+      this.root.classList.toggle("is-grid", grid);
+      this.root.classList.toggle("is-wide", sum > 2.2);
+      this.inner.style.setProperty("--sum-ar", (grid ? sum / 2 : sum).toFixed(4));
+      this.inner.style.setProperty("--n", String(grid ? 2 : specs.length));
+
       this.thumbs.forEach((b, k) => {
         b.classList.toggle("is-active", k === i);
         b.setAttribute("aria-pressed", String(k === i));
+        const img = b.firstChild;
+        const src = this.result(samples[k]).thumb;
+        if (img.getAttribute("src") !== src) img.src = src;
+      });
+      (this.methodBtns || []).forEach((b, k) => {
+        const id = this.methods[k].id;
+        b.classList.toggle("is-active", id === this.method);
+        b.setAttribute("aria-pressed", String(id === this.method));
+        b.disabled = !sample.results[id];
       });
       this.updateButton();
       this.render();
@@ -275,7 +347,12 @@
           if (dt > d / 2) dt -= d;
           else if (dt < -d / 2) dt += d;
         }
-        if (Math.abs(dt) > SYNC_TOLERANCE) v.currentTime = Number.isFinite(v.duration) ? Math.min(t, v.duration - 0.04) : t;
+        const rate = Math.abs(dt) <= SYNC_NUDGE ? 1 : dt > 0 ? 0.95 : 1.05;
+        if (v.playbackRate !== rate) v.playbackRate = rate;
+        if (Math.abs(dt) > SYNC_TOLERANCE) {
+          v.currentTime = Number.isFinite(v.duration) ? Math.min(t, v.duration - 0.04) : t;
+          v.playbackRate = 1;
+        }
       }
     }
 
@@ -323,12 +400,14 @@
     const h2 = el("h2");
     h2.textContent = sec.title;
     head.append(h2);
-    if (sec.method) {
+    const player = new Player(sec);
+    if (player.switchEl) {
+      head.append(player.switchEl);
+    } else if (sec.methods && sec.methods.length) {
       const badge = el("span", "badge");
-      badge.textContent = sec.method;
+      badge.textContent = sec.methods[0].title;
       head.append(badge);
     }
-    const player = new Player(sec);
     box.append(head, player.root);
     if (player.thumbsEl) box.append(player.thumbsEl);
     node.append(box);

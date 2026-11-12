@@ -8,6 +8,7 @@
   --line: #e1e6ea;
   --ink: #1c2b33;              /* buttons, active states */
   --blue: #0866ff;             /* visualization */
+  --purple: #7048e8;           /* 3D view */
   --orange: #f08c00;           /* analysis */
   --frame: #0e1215;            /* behind the videos */
   --radius: 14px;
@@ -135,6 +136,23 @@ button { font: inherit; color: inherit; }
   font-weight: 600;
 }
 
+/* switch between the methods of a section */
+.methods { display: inline-flex; gap: 3px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--bg); }
+.method {
+  padding: 6px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease;
+}
+.method:hover { color: var(--text); }
+.method.is-active { background: var(--ink); color: #fff; }
+.method:disabled { opacity: .4; cursor: default; }
+
 /* ---- player: one row of videos with shared controls ------------------------------------------ */
 .player { --row-h: min(62vh, 560px); position: relative; }
 .player.is-wide { left: 50%; width: min(1600px, calc(100vw - 48px)); transform: translateX(-50%); }
@@ -157,17 +175,24 @@ button { font: inherit; color: inherit; }
 .clip-label span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .clip-label::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--dot, var(--faint)); }
 .clip[data-slot="visualization"] { --dot: var(--blue); }
+.clip[data-slot="3d"] { --dot: var(--purple); }
 .clip[data-slot="analysis"] { --dot: var(--orange); }
+
+/* four landscape videos: 2 x 2, each row as tall as half the usual row */
+.player.is-grid { --row-h: min(34vh, 380px); }
+.player.is-grid .row { flex-wrap: wrap; row-gap: 18px; }
+.player.is-grid .clip { flex: 0 0 calc(50% - var(--gap) / 2); }
 .frame {
   position: relative;
   aspect-ratio: var(--ar);
   overflow: hidden;
   border-radius: var(--radius);
-  background: var(--frame);
   cursor: pointer;
   isolation: isolate;
 }
-/* the frame has the video's own aspect ratio, so cover only hides sub-pixel gaps */
+/* the frame has the video's own aspect ratio, so cover only hides sub-pixel gaps. No background colour under
+   the video: Chrome draws video frames on their own layer, and any colour beneath shows as a hairline at the
+   rounded corners; the poster fills the frame until the video plays. */
 .frame video { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
 
 .controls { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
@@ -211,6 +236,7 @@ button { font: inherit; color: inherit; }
   padding: 48px 32px 32px;
   background: #0b0e10;
 }
+.player.is-grid:fullscreen { --row-h: calc(50vh - 105px); }
 .player:fullscreen .player-inner { width: 100%; }
 .player:fullscreen .clip-label, .player:fullscreen .time { color: #aab6be; }
 .player:fullscreen .ctl { border-color: rgba(255, 255, 255, .2); background: transparent; color: #fff; }
@@ -269,7 +295,7 @@ button { font: inherit; color: inherit; }
   .container { padding: 0 16px; }
   .player.is-wide { left: auto; width: auto; transform: none; }
   .player.is-wide .player-inner { max-width: none; }
-  .player.is-wide .row { flex-direction: column; gap: 14px; }
+  .player.is-wide .row { flex-direction: column; flex-wrap: nowrap; gap: 14px; } /* wrap would size tiles before they stretch */
   .player.is-wide .clip { flex: none; }
   .clip-label { gap: 6px; margin: 0 0 7px 1px; font-size: .64rem; letter-spacing: .04em; }
   .clip-label::before { width: 6px; height: 6px; }
