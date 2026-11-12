@@ -1,8 +1,8 @@
 // Written by build_page.py: run it again after new results (sample titles: input/sources.json)
 window.PAGE_DATA = {
  "teaser": {
-  "src": "videos/teaser.mp4?v=41ad9778",
-  "poster": "videos/teaser.jpg?v=1e2d53b1",
+  "src": "videos/teaser.mp4?v=25c6d7c6",
+  "poster": "videos/teaser.jpg?v=f3c89f94",
   "width": 1920,
   "height": 540
  },
@@ -502,29 +502,29 @@ window.PAGE_DATA = {
      },
      "results": {
       "smirk": {
-       "thumb": "videos/face-recognition/01_in_car_grayscale_closeup/smirk/thumb.jpg?v=526fd36e",
+       "thumb": "videos/face-recognition/01_in_car_grayscale_closeup/smirk/thumb.jpg?v=8a4c1ad5",
        "videos": [
         {
          "slot": "visualization",
          "label": "Visualization",
-         "src": "videos/face-recognition/01_in_car_grayscale_closeup/smirk/visualization.mp4?v=fa61bda9",
-         "poster": "videos/face-recognition/01_in_car_grayscale_closeup/smirk/visualization.jpg?v=5ea8f058",
+         "src": "videos/face-recognition/01_in_car_grayscale_closeup/smirk/visualization.mp4?v=89b0e949",
+         "poster": "videos/face-recognition/01_in_car_grayscale_closeup/smirk/visualization.jpg?v=9f59e4ab",
          "width": 406,
          "height": 720
         },
         {
          "slot": "3d",
          "label": "3D View",
-         "src": "videos/face-recognition/01_in_car_grayscale_closeup/smirk/3d.mp4?v=f492eedb",
-         "poster": "videos/face-recognition/01_in_car_grayscale_closeup/smirk/3d.jpg?v=eb0461ae",
+         "src": "videos/face-recognition/01_in_car_grayscale_closeup/smirk/3d.mp4?v=a067fece",
+         "poster": "videos/face-recognition/01_in_car_grayscale_closeup/smirk/3d.jpg?v=eae852d9",
          "width": 576,
          "height": 720
         },
         {
          "slot": "analysis",
          "label": "Analysis",
-         "src": "videos/face-recognition/01_in_car_grayscale_closeup/smirk/analysis.mp4?v=af87718c",
-         "poster": "videos/face-recognition/01_in_car_grayscale_closeup/smirk/analysis.jpg?v=e5af00c0",
+         "src": "videos/face-recognition/01_in_car_grayscale_closeup/smirk/analysis.mp4?v=583d6c40",
+         "poster": "videos/face-recognition/01_in_car_grayscale_closeup/smirk/analysis.jpg?v=19ff10e7",
          "width": 570,
          "height": 720
         }
@@ -578,29 +578,29 @@ window.PAGE_DATA = {
      },
      "results": {
       "smirk": {
-       "thumb": "videos/face-recognition/02_blinking_frontal/smirk/thumb.jpg?v=72224a81",
+       "thumb": "videos/face-recognition/02_blinking_frontal/smirk/thumb.jpg?v=3f0e5cdf",
        "videos": [
         {
          "slot": "visualization",
          "label": "Visualization",
-         "src": "videos/face-recognition/02_blinking_frontal/smirk/visualization.mp4?v=69e2e2fd",
-         "poster": "videos/face-recognition/02_blinking_frontal/smirk/visualization.jpg?v=4cbe9584",
+         "src": "videos/face-recognition/02_blinking_frontal/smirk/visualization.mp4?v=5093a74e",
+         "poster": "videos/face-recognition/02_blinking_frontal/smirk/visualization.jpg?v=db116739",
          "width": 1280,
          "height": 720
         },
         {
          "slot": "3d",
          "label": "3D View",
-         "src": "videos/face-recognition/02_blinking_frontal/smirk/3d.mp4?v=490cf01c",
-         "poster": "videos/face-recognition/02_blinking_frontal/smirk/3d.jpg?v=6e98b990",
+         "src": "videos/face-recognition/02_blinking_frontal/smirk/3d.mp4?v=0fab0cff",
+         "poster": "videos/face-recognition/02_blinking_frontal/smirk/3d.jpg?v=d6c6f920",
          "width": 576,
          "height": 720
         },
         {
          "slot": "analysis",
          "label": "Analysis",
-         "src": "videos/face-recognition/02_blinking_frontal/smirk/analysis.mp4?v=2507903b",
-         "poster": "videos/face-recognition/02_blinking_frontal/smirk/analysis.jpg?v=f0754240",
+         "src": "videos/face-recognition/02_blinking_frontal/smirk/analysis.mp4?v=7a38261e",
+         "poster": "videos/face-recognition/02_blinking_frontal/smirk/analysis.jpg?v=f50fdacd",
          "width": 760,
          "height": 720
         }
@@ -654,29 +654,29 @@ window.PAGE_DATA = {
      },
      "results": {
       "smirk": {
-       "thumb": "videos/face-recognition/03_yawning/smirk/thumb.jpg?v=700aada4",
+       "thumb": "videos/face-recognition/03_yawning/smirk/thumb.jpg?v=e26b7c06",
        "videos": [
         {
          "slot": "visualization",
          "label": "Visualization",
-         "src": "videos/face-recognition/03_yawning/smirk/visualization.mp4?v=747c63ef",
-         "poster": "videos/face-recognition/03_yawning/smirk/visualization.jpg?v=cf3b4c10",
+         "src": "videos/face-recognition/03_yawning/smirk/visualization.mp4?v=10179d98",
+         "poster": "videos/face-recognition/03_yawning/smirk/visualization.jpg?v=a8f4e9f7",
          "width": 380,
          "height": 720
         },
         {
          "slot": "3d",
          "label": "3D View",
-         "src": "videos/face-recognition/03_yawning/smirk/3d.mp4?v=8265634b",
-         "poster": "videos/face-recognition/03_yawning/smirk/3d.jpg?v=bb9f4168",
+         "src": "videos/face-recognition/03_yawning/smirk/3d.mp4?v=84fea8b9",
+         "poster": "videos/face-recognition/03_yawning/smirk/3d.jpg?v=3c42af2c",
          "width": 576,
          "height": 720
         },
         {
          "slot": "analysis",
          "label": "Analysis",
-         "src": "videos/face-recognition/03_yawning/smirk/analysis.mp4?v=ffb53e63",
-         "poster": "videos/face-recognition/03_yawning/smirk/analysis.jpg?v=823f3d26",
+         "src": "videos/face-recognition/03_yawning/smirk/analysis.mp4?v=1369d4c9",
+         "poster": "videos/face-recognition/03_yawning/smirk/analysis.jpg?v=65a8fa34",
          "width": 570,
          "height": 720
         }
@@ -730,29 +730,29 @@ window.PAGE_DATA = {
      },
      "results": {
       "smirk": {
-       "thumb": "videos/face-recognition/04_yawning_hand_over_mouth/smirk/thumb.jpg?v=ac6de1e7",
+       "thumb": "videos/face-recognition/04_yawning_hand_over_mouth/smirk/thumb.jpg?v=d1bbac37",
        "videos": [
         {
          "slot": "visualization",
          "label": "Visualization",
-         "src": "videos/face-recognition/04_yawning_hand_over_mouth/smirk/visualization.mp4?v=341e0e75",
-         "poster": "videos/face-recognition/04_yawning_hand_over_mouth/smirk/visualization.jpg?v=edf13b86",
+         "src": "videos/face-recognition/04_yawning_hand_over_mouth/smirk/visualization.mp4?v=f1d6e57b",
+         "poster": "videos/face-recognition/04_yawning_hand_over_mouth/smirk/visualization.jpg?v=ece67bc9",
          "width": 1280,
          "height": 720
         },
         {
          "slot": "3d",
          "label": "3D View",
-         "src": "videos/face-recognition/04_yawning_hand_over_mouth/smirk/3d.mp4?v=97073b91",
-         "poster": "videos/face-recognition/04_yawning_hand_over_mouth/smirk/3d.jpg?v=eb5b791e",
+         "src": "videos/face-recognition/04_yawning_hand_over_mouth/smirk/3d.mp4?v=7c4ad9ae",
+         "poster": "videos/face-recognition/04_yawning_hand_over_mouth/smirk/3d.jpg?v=5a99ea34",
          "width": 576,
          "height": 720
         },
         {
          "slot": "analysis",
          "label": "Analysis",
-         "src": "videos/face-recognition/04_yawning_hand_over_mouth/smirk/analysis.mp4?v=13a9acab",
-         "poster": "videos/face-recognition/04_yawning_hand_over_mouth/smirk/analysis.jpg?v=1e5262bc",
+         "src": "videos/face-recognition/04_yawning_hand_over_mouth/smirk/analysis.mp4?v=b8aa8aed",
+         "poster": "videos/face-recognition/04_yawning_hand_over_mouth/smirk/analysis.jpg?v=a1a37c97",
          "width": 760,
          "height": 720
         }
@@ -806,29 +806,29 @@ window.PAGE_DATA = {
      },
      "results": {
       "smirk": {
-       "thumb": "videos/face-recognition/05_sleepy_rubbing_eyes/smirk/thumb.jpg?v=c7f9b786",
+       "thumb": "videos/face-recognition/05_sleepy_rubbing_eyes/smirk/thumb.jpg?v=989be55a",
        "videos": [
         {
          "slot": "visualization",
          "label": "Visualization",
-         "src": "videos/face-recognition/05_sleepy_rubbing_eyes/smirk/visualization.mp4?v=c03cd19b",
-         "poster": "videos/face-recognition/05_sleepy_rubbing_eyes/smirk/visualization.jpg?v=3f709bb6",
+         "src": "videos/face-recognition/05_sleepy_rubbing_eyes/smirk/visualization.mp4?v=a378c354",
+         "poster": "videos/face-recognition/05_sleepy_rubbing_eyes/smirk/visualization.jpg?v=fb05f711",
          "width": 380,
          "height": 720
         },
         {
          "slot": "3d",
          "label": "3D View",
-         "src": "videos/face-recognition/05_sleepy_rubbing_eyes/smirk/3d.mp4?v=9e11452d",
-         "poster": "videos/face-recognition/05_sleepy_rubbing_eyes/smirk/3d.jpg?v=dc2f3603",
+         "src": "videos/face-recognition/05_sleepy_rubbing_eyes/smirk/3d.mp4?v=14e51ded",
+         "poster": "videos/face-recognition/05_sleepy_rubbing_eyes/smirk/3d.jpg?v=6f8b94de",
          "width": 576,
          "height": 720
         },
         {
          "slot": "analysis",
          "label": "Analysis",
-         "src": "videos/face-recognition/05_sleepy_rubbing_eyes/smirk/analysis.mp4?v=aaabd307",
-         "poster": "videos/face-recognition/05_sleepy_rubbing_eyes/smirk/analysis.jpg?v=abe5fcca",
+         "src": "videos/face-recognition/05_sleepy_rubbing_eyes/smirk/analysis.mp4?v=0e5a8dc1",
+         "poster": "videos/face-recognition/05_sleepy_rubbing_eyes/smirk/analysis.jpg?v=89db349d",
          "width": 570,
          "height": 720
         }
@@ -882,29 +882,29 @@ window.PAGE_DATA = {
      },
      "results": {
       "smirk": {
-       "thumb": "videos/face-recognition/06_yawning_with_glasses/smirk/thumb.jpg?v=44d60456",
+       "thumb": "videos/face-recognition/06_yawning_with_glasses/smirk/thumb.jpg?v=0f78670f",
        "videos": [
         {
          "slot": "visualization",
          "label": "Visualization",
-         "src": "videos/face-recognition/06_yawning_with_glasses/smirk/visualization.mp4?v=a6a2d3b3",
-         "poster": "videos/face-recognition/06_yawning_with_glasses/smirk/visualization.jpg?v=872396e1",
+         "src": "videos/face-recognition/06_yawning_with_glasses/smirk/visualization.mp4?v=f6192ba5",
+         "poster": "videos/face-recognition/06_yawning_with_glasses/smirk/visualization.jpg?v=cf27189a",
          "width": 406,
          "height": 720
         },
         {
          "slot": "3d",
          "label": "3D View",
-         "src": "videos/face-recognition/06_yawning_with_glasses/smirk/3d.mp4?v=50309071",
-         "poster": "videos/face-recognition/06_yawning_with_glasses/smirk/3d.jpg?v=24d83f32",
+         "src": "videos/face-recognition/06_yawning_with_glasses/smirk/3d.mp4?v=b0a869ad",
+         "poster": "videos/face-recognition/06_yawning_with_glasses/smirk/3d.jpg?v=64f50b6f",
          "width": 576,
          "height": 720
         },
         {
          "slot": "analysis",
          "label": "Analysis",
-         "src": "videos/face-recognition/06_yawning_with_glasses/smirk/analysis.mp4?v=0431b132",
-         "poster": "videos/face-recognition/06_yawning_with_glasses/smirk/analysis.jpg?v=131e5fe4",
+         "src": "videos/face-recognition/06_yawning_with_glasses/smirk/analysis.mp4?v=ca96ff3a",
+         "poster": "videos/face-recognition/06_yawning_with_glasses/smirk/analysis.jpg?v=ebb9c6dc",
          "width": 570,
          "height": 720
         }
