@@ -1,6 +1,6 @@
 // Written by build_page.py: run it again after new results (sample titles: input/sources.json)
 window.PAGE_DATA = {
- "generated": "2026-11-12T16:30:05",
+ "generated": "2026-11-12T16:31:04",
  "teaser": {
   "src": "videos/teaser.mp4",
   "poster": "videos/teaser.jpg",
